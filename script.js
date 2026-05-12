@@ -27,6 +27,9 @@ function renderState(showCelebration = false) {
   celebrationStatus.textContent = `Clicks until celebration: ${
     CELEBRATION_INTERVAL - celebrationClicks
   }`;
+  if (showCelebration) {
+    celebrationMessage.textContent = `Congratulations! You clicked the button ${totalClicks} times.`;
+  }
   celebrationMessage.hidden = !showCelebration;
 }
 
