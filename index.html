@@ -9,13 +9,19 @@
   <body class="state-green">
     <main class="app" aria-live="polite">
       <h1>Happy Button</h1>
-      <button id="happy-button" type="button" class="happy-button button-green">
-        Click me
-      </button>
+      <div class="button-row">
+        <button id="button-1" type="button" class="happy-button button-green" data-button="1">
+          Button 1
+        </button>
+        <button id="button-2" type="button" class="happy-button button-red" data-button="2">
+          Button 2
+        </button>
+      </div>
       <p id="click-status" class="status">Total clicks: 0</p>
-      <p id="celebration-status" class="status">Clicks until celebration: 5</p>
+      <p id="sequence-status" class="status">Alternations: 0 / 3</p>
+      <p id="sequence-hint" class="hint">Click the two buttons in alternating order to build the sequence.</p>
       <p id="celebration-message" class="celebration" hidden>
-        Congratulations! You clicked the button 5 times.
+        Congratulations! You completed 3 alternations.
       </p>
     </main>
     <script src="script.js"></script>
