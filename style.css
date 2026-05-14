@@ -106,3 +106,56 @@ h1 {
     animation: none;
   }
 }
+
+/* Subtle hint that points users toward the hidden surprise. */
+.easter-egg-hint {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  margin: 0;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: rgb(17 24 39 / 55%);
+  color: rgb(255 255 255 / 88%);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 18%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  pointer-events: none;
+  user-select: none;
+  animation: easter-egg-hint-pulse 4s ease-in-out infinite;
+}
+
+.easter-egg-hint span {
+  font-size: 0.95rem;
+}
+
+@keyframes easter-egg-hint-pulse {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .easter-egg-hint {
+    animation: none;
+    opacity: 0.85;
+  }
+}
+
+@media (max-width: 28rem) {
+  .easter-egg-hint {
+    right: 0.5rem;
+    bottom: 0.5rem;
+    font-size: 0.78rem;
+  }
+}
