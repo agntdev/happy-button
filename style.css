@@ -106,3 +106,98 @@ h1 {
     animation: none;
   }
 }
+
+/* Secret easter egg explosion overlay (triggered by typing "BOOM"). */
+.easter-egg-explosion {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+  animation: easter-egg-flash 1.4s ease-out forwards;
+}
+
+.easter-egg-core {
+  position: relative;
+  font-size: clamp(3rem, 12vw, 8rem);
+  font-weight: 900;
+  color: #fde047;
+  text-shadow:
+    0 0 1.5rem #f59e0b,
+    0 0 3rem #ef4444,
+    0 0 6rem #b91c1c;
+  animation: easter-egg-core 1.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+.easter-egg-particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fde047, #ef4444 70%, #7f1d1d);
+  box-shadow: 0 0 0.75rem rgb(239 68 68 / 80%);
+  transform: translate(-50%, -50%);
+  animation: easter-egg-particle 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes easter-egg-flash {
+  0% {
+    background: rgb(255 255 255 / 0%);
+  }
+  10% {
+    background: rgb(255 247 196 / 60%);
+  }
+  35% {
+    background: rgb(255 247 196 / 18%);
+  }
+  100% {
+    background: rgb(255 255 255 / 0%);
+  }
+}
+
+@keyframes easter-egg-core {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes easter-egg-particle {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px)))
+      scale(0.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .easter-egg-explosion,
+  .easter-egg-core,
+  .easter-egg-particle {
+    animation-duration: 0.3s;
+  }
+  .easter-egg-particle {
+    display: none;
+  }
+}
