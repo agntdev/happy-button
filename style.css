@@ -28,7 +28,13 @@ body.state-red {
   background: #16a34a;
 }
 
+body.state-win {
+  background: #fde047;
+}
+
 .app {
+  position: relative;
+  overflow: hidden;
   width: min(92vw, 28rem);
   padding: 2rem;
   text-align: center;
@@ -41,6 +47,12 @@ h1 {
   margin: 0 0 1.25rem;
   font-size: clamp(2rem, 8vw, 3.25rem);
   line-height: 1;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
 }
 
 .happy-button {
@@ -80,6 +92,19 @@ h1 {
   font-weight: 600;
 }
 
+.hint {
+  margin: 1rem 0 0;
+  color: #4b5563;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.hint:focus-visible {
+  outline: 3px solid #111827;
+  outline-offset: 3px;
+}
+
 .celebration {
   margin: 1.25rem 0 0;
   padding: 0.875rem 1rem;
@@ -88,6 +113,42 @@ h1 {
   color: #92400e;
   font-weight: 700;
   animation: celebrate-in 240ms ease-out;
+}
+
+.confetti,
+.explosion {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.confetti span {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  width: 0.6rem;
+  height: 0.9rem;
+  background: var(--color);
+  opacity: 0;
+  transform: translate(-50%, 0) rotate(0deg);
+  animation: confetti-drop 900ms ease-out var(--delay) forwards;
+}
+
+.explosion span {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 999px;
+  background: #f97316;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.4);
+}
+
+.explosion.is-active span {
+  animation: explode 620ms ease-out forwards;
 }
 
 @keyframes celebrate-in {
@@ -101,8 +162,39 @@ h1 {
   }
 }
 
+@keyframes confetti-drop {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -1rem) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--x)), 11rem) rotate(260deg);
+  }
+}
+
+@keyframes explode {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)))
+      scale(1.2);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .celebration {
+  .celebration,
+  .confetti span,
+  .explosion.is-active span {
     animation: none;
+  }
+}
+
+@media (max-width: 28rem) {
+  .button-row {
+    grid-template-columns: 1fr;
   }
 }

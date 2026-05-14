@@ -9,14 +9,22 @@
   <body class="state-green">
     <main class="app" aria-live="polite">
       <h1>Happy Button</h1>
-      <button id="happy-button" type="button" class="happy-button button-green">
-        Click me
-      </button>
-      <p id="click-status" class="status">Total clicks: 0</p>
-      <p id="celebration-status" class="status">Clicks until celebration: 5</p>
-      <p id="celebration-message" class="celebration" hidden>
-        Congratulations! You clicked the button 5 times.
+      <div class="button-row">
+        <button id="happy-button" type="button" class="happy-button button-green">
+          Button 1
+        </button>
+        <button id="second-button" type="button" class="happy-button button-red">
+          Button 2
+        </button>
+      </div>
+      <p id="click-status" class="status">Alternation sequence: 0 / 6</p>
+      <p id="celebration-status" class="status">
+        Alternate between both buttons to win.
       </p>
+      <p id="easter-hint" class="hint" tabindex="0">Пасхалка ждет тебя!</p>
+      <p id="celebration-message" class="celebration" hidden>Ты выйграл</p>
+      <div id="confetti" class="confetti" aria-hidden="true"></div>
+      <div id="explosion" class="explosion" aria-hidden="true"></div>
     </main>
     <script src="script.js"></script>
   </body>
