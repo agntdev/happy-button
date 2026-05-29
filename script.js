@@ -42,7 +42,7 @@ function renderState(showCelebration = false) {
   )} / ${SEQUENCE_TARGET}`;
 
   if (sequenceCelebrationActive) {
-    celebrationMessage.textContent = `Sequence complete! ${SEQUENCE_TARGET} alternations achieved.`;
+    celebrationMessage.textContent = "Ты выйграл";
     celebrationMessage.hidden = false;
   } else if (showCelebration) {
     celebrationMessage.textContent = `Congratulations! You clicked the button ${totalClicks} times.`;
@@ -96,6 +96,59 @@ button.addEventListener("click", handlePrimaryClick);
 button2.addEventListener("click", handleSecondaryClick);
 
 renderState(false);
+
+// Sequence celebration: confetti, yellow background, "Ты выйграл" message.
+const CONFETTI_COUNT = 60;
+let confettiActive = false;
+
+function spawnConfetti() {
+  if (confettiActive) return;
+  confettiActive = true;
+
+  document.body.classList.add("sequence-win");
+
+  const container = document.createElement("div");
+  container.className = "confetti-container";
+  container.setAttribute("aria-hidden", "true");
+
+  const colors = [
+    "#fde047",
+    "#ef4444",
+    "#3b82f6",
+    "#22c55e",
+    "#a855f7",
+    "#f97316",
+  ];
+
+  for (let i = 0; i < CONFETTI_COUNT; i += 1) {
+    const piece = document.createElement("span");
+    piece.className = "confetti-piece";
+    piece.style.setProperty("--x", `${Math.random() * 100}%`);
+    piece.style.setProperty("--delay", `${Math.random() * 0.6}s`);
+    piece.style.setProperty("--duration", `${2 + Math.random() * 2}s`);
+    piece.style.setProperty(
+      "--color",
+      colors[Math.floor(Math.random() * colors.length)],
+    );
+    piece.style.setProperty("--rotation", `${Math.random() * 360}deg`);
+    piece.style.setProperty("--size", `${6 + Math.random() * 6}px`);
+    container.appendChild(piece);
+  }
+
+  document.body.appendChild(container);
+
+  const cleanup = () => {
+    container.remove();
+    document.body.classList.remove("sequence-win");
+    confettiActive = false;
+  };
+  container.addEventListener("animationend", cleanup, { once: true });
+  window.setTimeout(cleanup, 4000);
+}
+
+document.body.addEventListener("sequence:complete", () => {
+  spawnConfetti();
+});
 
 // Secret easter egg: type "BOOM" anywhere on the page to trigger an explosion.
 const EASTER_EGG_SEQUENCE = "BOOM";
