@@ -209,3 +209,53 @@ h1 {
   font-style: italic;
   user-select: none;
 }
+
+/* Sequence win: yellow background transition. */
+body.sequence-win {
+  background: #fde047 !important;
+  transition: background-color 600ms ease;
+}
+
+/* Confetti container and pieces. */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  left: var(--x, 50%);
+  width: var(--size, 8px);
+  height: var(--size, 8px);
+  border-radius: 2px;
+  background: var(--color, #fde047);
+  animation: confetti-fall var(--duration, 3s) var(--delay, 0s) ease-in forwards;
+  transform: rotate(var(--rotation, 0deg));
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--rotation, 0deg));
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(calc(var(--rotation, 0deg) + 720deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.sequence-win {
+    transition: none;
+  }
+  .confetti-piece {
+    animation-duration: 0.5s;
+  }
+}
